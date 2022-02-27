@@ -2,6 +2,7 @@ import numpy as np
 import skfuzzy as fuzz
 from skfuzzy import control as ctrl
 import mysql.connector
+from visualizacao import *
 
 #contectando com o banco local
 banco = mysql.connector.connect(
@@ -11,12 +12,11 @@ banco = mysql.connector.connect(
   password=''
 )
 
-
 #Criando as variaveis do problema
 UmidadeSolo  = ctrl.Antecedent(np.arange(0,60,1),'UmidadeSolo')
 temperaturaSolo  = ctrl.Antecedent(np.arange(0,40,1),'temperaturaSolo')
 NivelAgua = ctrl.Antecedent(np.arange(0,6,1),'NivelAgua')
-#Como a duração da agua é a saida devemos colocar o metodo Consequent
+#Saida do sistema
 DuracaoAgua = ctrl.Consequent(np.arange(0,180,1),'DuracaoAgua')
 
 #Criando as funções de pertinencia para a umidade do solo
@@ -38,6 +38,7 @@ NivelAgua['Alta'] = fuzz.trapmf(NivelAgua.universe, [6,8,10,12])
 DuracaoAgua['Curto'] = fuzz.trapmf(DuracaoAgua.universe, [0,0,40,60])
 DuracaoAgua['Medio'] = fuzz.trapmf(DuracaoAgua.universe, [30,60,100,120])
 DuracaoAgua['Longo'] = fuzz.trapmf(DuracaoAgua.universe, [90,120,160,180])
+
 #Criando as regras para o tempo de duração da agua
 Regra1 = ctrl.Rule(UmidadeSolo['Molhada'] & temperaturaSolo['Gelada'] & NivelAgua['Baixa'],DuracaoAgua['Curto'])
 Regra2 = ctrl.Rule(UmidadeSolo['Molhada'] & temperaturaSolo['Gelada'] & NivelAgua['Normal'],DuracaoAgua['Curto'])
@@ -72,57 +73,32 @@ DuracaoAgua_ctrl = ctrl.ControlSystem([Regra1,Regra2,Regra3,Regra4,Regra5,Regra6
 DuracaoAgua_simulador = ctrl.ControlSystemSimulation(DuracaoAgua_ctrl)
 
 
+def cadastra_Banco():
+  #Entrada da temperatura
+  while True:
+    temp = temperatura
+    DuracaoAgua_simulador.input['temperaturaSolo'] = temp
+    break
 
-#Entrada da temperatura
-while True:
-  temp = float(input("Digite a Temperatura em graus celsius:"))
-  if temp < 0 or temp > 40:
-    print("A temperatura adeve estar no intervalo [0,40]")
-    continue
-  DuracaoAgua_simulador.input['temperaturaSolo'] = temp
-  break
+  #Entrada da Umidade
+  while True:
+    ur = Umidade
+    DuracaoAgua_simulador.input['UmidadeSolo'] = ur
+    break
 
-#Entrada da Umidade
-while True:
-  ur = float(input("Digite a Umidade em cbar:"))
-  if ur < 0 or ur > 60:
-    print("A umidade deve estar no intervalo [0,60]")
-    continue
-  DuracaoAgua_simulador.input['UmidadeSolo'] = ur
-  break
+  #Entrada do nivel da agua
+  while True:
+    na = Nivel_Agua
+    DuracaoAgua_simulador.input['NivelAgua'] = na
+    break
 
-#Entrada do nivel da agua
-while True:
-  na = float(input("Digite o nivel da agua em metros:"))
-  if na < 0 or na > 6:
-    print("A umidade deve estar no intervalo [0,6]")
-    continue
-  DuracaoAgua_simulador.input['NivelAgua'] = na
-  break
-
-#Colocando os dados no banco
-cursor = banco.cursor()
-comando_insercao = "INSERT INTO planta (temperatura,umidade,nivel_agua) VALUES (%s,%s,%s)"
-dados = (str(temp),str(ur),str(na))
-cursor.execute(comando_insercao,dados)
-banco.commit()
-
-
+  #Colocando os dados no banco
+  cursor = banco.cursor()
+  comando_insercao = "INSERT INTO planta (temperatura,umidade,nivel_agua) VALUES (%d,%d,%d)"
+  dados = (temp,ur,na)
+  cursor.execute(comando_insercao,dados)
+  banco.commit()
 
 #Computando o resultado (Inferencia fuzzy + Defuzzificação)
 DuracaoAgua_simulador.compute()
 print(f"A duração da agua calculada foi de {DuracaoAgua_simulador.output['DuracaoAgua']}")
-
-
-"""
-
-Tabela da planta que sera utillizada
-
-Create table planta(
-  IDPLANTA int not null auto_increment,
-  temperatura INT not null,
-  umidade INT not null,
-  nivel_agua INT not null,
-  primary key (IDPLANTA)
-);
-"""
