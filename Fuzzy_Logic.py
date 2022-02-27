@@ -1,8 +1,16 @@
 import numpy as np
 import skfuzzy as fuzz
-import matplotlib.pyplot as plt
 from skfuzzy import control as ctrl
 import mysql.connector
+
+#contectando com o banco local
+banco = mysql.connector.connect(
+  host='localhost',
+  database='tcc',
+  user='root',
+  password=''
+)
+
 
 #Criando as variaveis do problema
 UmidadeSolo  = ctrl.Antecedent(np.arange(0,60,1),'UmidadeSolo')
@@ -76,7 +84,7 @@ while True:
 
 #Entrada da Umidade
 while True:
-  ur = float(input("Digite a Umidade em cbar"))
+  ur = float(input("Digite a Umidade em cbar:"))
   if ur < 0 or ur > 60:
     print("A umidade deve estar no intervalo [0,60]")
     continue
@@ -92,11 +100,29 @@ while True:
   DuracaoAgua_simulador.input['NivelAgua'] = na
   break
 
+#Colocando os dados no banco
+cursor = banco.cursor()
+comando_insercao = "INSERT INTO planta (temperatura,umidade,nivel_agua) VALUES (%s,%s,%s)"
+dados = (str(temp),str(ur),str(na))
+cursor.execute(comando_insercao,dados)
+banco.commit()
+
+
+
 #Computando o resultado (Inferencia fuzzy + Defuzzificação)
 DuracaoAgua_simulador.compute()
 print(f"A duração da agua calculada foi de {DuracaoAgua_simulador.output['DuracaoAgua']}")
 
-#visualizando as regiões
-temperaturaSolo.view(sim=DuracaoAgua_simulador)
-UmidadeSolo.view(sim=DuracaoAgua_simulador)
-NivelAgua.view(sim=DuracaoAgua_simulador)
+
+"""
+
+Tabela da planta que sera utillizada
+
+Create table planta(
+  IDPLANTA int not null auto_increment,
+  temperatura INT not null,
+  umidade INT not null,
+  nivel_agua INT not null,
+  primary key (IDPLANTA)
+);
+"""
