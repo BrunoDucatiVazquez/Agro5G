@@ -84,11 +84,11 @@ while True:
 
 #Entrada do nivel da agua
 while True:
-  na = float(input("Digite o nivel da agua em metros:"))
-  if na < 0 or na > 6:
-    print("A umidade deve estar no intervalo [0,6]")
+  ph = float(input("Digite o nivel da agua em metros:"))
+  if ph < 0 or ph > 6:
+    print("A umidade deve estar no intervalo [0,14]")
     continue
-  DuracaoAgua_simulador.input['NivelAgua'] = na
+  DuracaoAgua_simulador.input['NivelAgua'] = ph
   break
 
 #Computando o resultado (Inferencia fuzzy + Defuzzificação)
@@ -98,4 +98,4 @@ print(f"A duração da agua calculada foi de {DuracaoAgua_simulador.output['Dura
 #visualizando as regiões
 temperaturaSolo.view(sim=DuracaoAgua_simulador)
 UmidadeSolo.view(sim=DuracaoAgua_simulador)
-NivelAgua.view(sim=DuracaoAgua_simulador)
+ph.view(sim=DuracaoAgua_simulador)
