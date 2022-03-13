@@ -2,7 +2,6 @@ import numpy as np
 import skfuzzy as fuzz
 import matplotlib.pyplot as plt
 from skfuzzy import control as ctrl
-import mysql.connector
 
 #Criando as variaveis do problema
 UmidadeSolo  = ctrl.Antecedent(np.arange(0,60,1),'UmidadeSolo')
