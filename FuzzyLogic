@@ -84,7 +84,7 @@ while True:
 #Entrada do nivel da agua
 while True:
   ph = float(input("Digite o nivel da agua em metros:"))
-  if ph < 0 or ph > 6:
+  if ph < 0 or ph > 14:
     print("A umidade deve estar no intervalo [0,14]")
     continue
   DuracaoAgua_simulador.input['NivelAgua'] = ph
