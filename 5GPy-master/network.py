@@ -413,11 +413,6 @@ class BasePacket(object):
 		self.aType = aType
 		self.aSize = aSize
 
-class BasePacketTemperature(BasePacket,object):
-		def __init__(self, aId, aType, aSize,getTemperature):
-			super().__init__(aId, aType, aSize)
-			self.getTemperature = getTemperature
-
 #---------------------------------------------------------------Running the simulation----------------------------------------------------------------
 env = simpy.Environment()#sets the simpy environment
 sensor1 = BaseSensor(env, 0, "Base")#create a single base sensor
