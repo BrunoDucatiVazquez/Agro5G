@@ -26,16 +26,10 @@ def visualizacao():
     janela.title("Testando interface Grafica")
     texto_orientacao = Label(janela, text="Visualização dos dados")
     texto_orientacao.grid(column=0, row=0)
-    texto_orientacao2 = Label(janela, text="Leitor de Humidade")
-    texto_orientacao2.grid(column=1, row=0)
     text_dados = Label(janela, text=simulationFinal.sensor_Humidity.setHumidity)
-    text_dados2 = Label(janela, text=simulationFinal.soil_sensor_Temperature.setTemperature)
-    text_dados3 = Label(janela, text=simulationFinal.sensor_Water_Level.setWaterLevel)
-  
+
     text_dados.grid(column=0,row=1)
-    text_dados2.grid(column=0,row=2)
-    text_dados3.grid(column=0,row=3)
-  
+
     janela.after(400,visualizacao)
     janela.mainloop()
     
