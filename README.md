@@ -18,3 +18,10 @@
 - simpy
 - fuzzy logic com skfuzzy
 - numpy
+
+## Arquivos
+
+- O arquivo Agro5G é responsável pela visualização da interface gráfica
+- Os arquivos ALgorithm e Algorithm2 são responsáveis pelo algoritmo de irrigação 
+- O arquivo simulationFinal é o principal arquivo pois é nele que executa toda a simulação
+- Os arquivos .ui são responsaveis pela das telas da interface Gráfica
