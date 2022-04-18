@@ -18,4 +18,3 @@
 - simpy
 - fuzzy logic com skfuzzy
 - numpy
-- 
