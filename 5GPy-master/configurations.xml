@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Configuration file. All simulation parameters values must be put here. -->
+
+<config>
+<!-- Input parameters of the simulation-->
+    <InputParameters>
+        <switchTime>0.0001</switchTime>            
+        <frameProcTime>0.0001</frameProcTime>            
+        <transmissionTime>0.0000001</transmissionTime>
+        <localTransmissionTime>0.0000001</localTransmissionTime>
+        <cpriFrameGenerationTime>0.001</cpriFrameGenerationTime>
+        <distributionAverage>1000</distributionAverage>
+        <cpriMode>CPRI</cpriMode>
+        <!-- Limits of the cartesian plane representing all the base stations topology -->
+        <limitAxisY>2</limitAxisY>
+        <limitAxisX>2</limitAxisX>
+        <!-- Values to increase the size of each base station regarding its representation on a cartesian plane -->
+        <stepAxisY>1</stepAxisY>
+        <stepAxisX>1</stepAxisX>       
+    </InputParameters>
+
+<!--Sensors-->
+    <Sensor>
+        <Sensor aId = "0"/>
+        <Sensor aId = "1"/>
+        <Sensor aId = "2"/>
+        <Sensor aId = "3"/>
+        <!--<Sensor aId = "4"/>
+        <Sensor aId = "5"/>
+        <Sensor aId = "6"/>
+        <Sensor aId = "7"/>-->
+    </Sensor>
+
+<!-- RRHs -->
+    <RRHs>
+        <RRH aId = "0" />
+        <RRH aId = "1" />
+        <RRH aId = "2" />
+        <RRH aId = "3" />
+    </RRHs>
+
+<!-- Network nodes -->
+    <NetworkNodes>
+        <Node aId = "0" aType = "Switch" capacity = "10000" qos = "Standard" />
+        <Node aId = "1" aType = "Switch" capacity = "10000" qos = "Standard" />
+        <Node aId = "2" aType = "Switch" capacity = "10000" qos = "Standard" />
+    </NetworkNodes>
+
+<!-- Processing nodes -->
+    <ProcessingNodes>
+        <Proc aId = "0" aType = "Cloud"  capacity = "10000" qos = "Standard" />
+    </ProcessingNodes>
+
+<!-- Connections to construct the directed graph -->
+    <Edges>
+        <Edge  source = "Sensor:0" destiny = "Switch:0" weight = "5.5" />
+        <Edge  source = "Sensor:1" destiny = "Switch:1" weight = "5.5" />
+        <Edge  source = "Sensor:2" destiny = "Switch:0" weight = "5.5" />
+        <Edge  source = "Sensor:3" destiny = "Switch:2" weight = "5.5" />
+        
+        <Edge  source = "Switch:0" destiny = "Switch:1" weight = "10" />
+        <Edge  source = "Switch:1" destiny = "Switch:2" weight = "3.4" />
+        <Edge  source = "Switch:2" destiny = "Switch:0" weight = "7" />
+        <Edge  source = "Switch:2" destiny = "Cloud:0" weight = "10" />
+    </Edges>>
+</config>
