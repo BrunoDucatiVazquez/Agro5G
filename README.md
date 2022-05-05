@@ -7,4 +7,4 @@ Agro5G é uma plataforma para o agronegócio baseada em redes 5G
 basta executar o comando: pip install -r .\requirements.txt. Pode demorar alguns minutos
 
 # Para rodar o Projeto
-execute o comando pip .\Agro5G.py dentro da pasta 5GPy-master. 
+execute o comando python .\Agro5G.py dentro da pasta 5GPy-master. 
