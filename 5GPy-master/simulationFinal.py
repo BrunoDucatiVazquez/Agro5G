@@ -178,7 +178,7 @@ class HumididtySensor(BaseSensor, object):
 				packetId += 1#increment the counter of packets
 				self.packets = []#clean the stored packets in this sensor
 
-class WaterLevelSensor(BaseSensor, object):
+class PhSensor(BaseSensor, object):
 
 	def _init_(self, env, aId, aType, iotGateway, generationInterval, sendInterval):
 		super()._init_(env, aId, aType, iotGateway, generationInterval, sendInterval)
@@ -186,11 +186,11 @@ class WaterLevelSensor(BaseSensor, object):
 	def run(self):
 		packetId = 0#counter to identify each generated packet in this sensor
 		while True:
-			self.setWaterLevel = random.randrange(0,14)
+			self.setPh = random.randrange(0,14)
 			yield self.env.timeout(self.generationInterval)#wait a given time to generate another packet/data
-			packet = BasePacket(packetId, self.aId, "WaterLevel", 120)#120  is a value in kb for the size of the packet 
+			packet = BasePacket(packetId, self.aId, "Ph", 120)#120  is a value in kb for the size of the packet 
 			print("Sensor {} of Type {} generated Packet: ID {} Type {} Size {} at moment {} and the value {}\n".format(self.aId, self.aType, packet.aId, packet.aType, 
-																	packet.aSize, self.env.now, self.setWaterLevel))#self.env.now is the current time of the simulation run
+																	packet.aSize, self.env.now, self.setPh))#self.env.now is the current time of the simulation run
 			self.packets.append(packet)#append to its list of generated packets
 			packetId+=1#increment the counter of packets
 
@@ -253,7 +253,7 @@ iotGateway1 = BaseIoTGateway(env, "iotGateway 1")
 #to see tradicional Iot just uncomment this part
 soil_sensor_Temperature = SoilTemperatureSensor(env, 0, "Temperature",iotGateway1,generationInterval,sendInterval,)#create temperature sensor
 sensor_Humidity = HumididtySensor(env, 0, "Humidity", iotGateway1, generationInterval, sendInterval)
-sensor_Water_Level = WaterLevelSensor(env, 0, "WaterLevel", iotGateway1, generationInterval, sendInterval)
+sensor_Ph = PhSensor(env, 0, "Ph", iotGateway1, generationInterval, sendInterval)
 
 #to see the ProcesingNode in  5G gateway, just uncomment this part
 ProcessingNode = ProcessingNode(env, 0, "Cloud",iotGateway1,IrrigationIoT)

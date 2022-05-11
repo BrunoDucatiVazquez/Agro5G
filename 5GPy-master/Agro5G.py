@@ -16,7 +16,7 @@ def executeAlgorithmAndVisualizateData(self):
         import simulationFinal
         Visualization.lineEdit.setText(str(simulationFinal.soil_sensor_Temperature.setTemperature))
         Visualization.lineEdit_2.setText(str(simulationFinal.sensor_Humidity.setHumidity))
-        Visualization.lineEdit_3.setText(str(simulationFinal.sensor_Water_Level.setWaterLevel))
+        Visualization.lineEdit_3.setText(str(simulationFinal.sensor_Ph.setPh))
         break
     
 def showGraphic():
@@ -24,13 +24,13 @@ def showGraphic():
     df = pd.read_excel(excel_file)
     Temperature = [go.Bar(x=df["Temperatura"], y=df["Duração Da Agua"])]
     Humidity = [go.Bar(x=df["Humidade"], y=df["Duração Da Agua"])]
-    WaterLevel = [go.Bar(x=df["NivelAgua"], y=df["Duração Da Agua"])]
+    Ph = [go.Bar(x=df["NivelAgua"], y=df["Duração Da Agua"])]
     fig = go.Figure(Temperature)
     fig2 = go.Figure(Humidity)
-    fig3 = go.Figure(WaterLevel)
+    fig3 = go.Figure(Ph)
     plotly.offline.plot(fig, filename="temperature.html")
     plotly.offline.plot(fig2, filename="Humidity.html")
-    plotly.offline.plot(fig3, filename="WaterLevel.html")
+    plotly.offline.plot(fig3, filename="Ph.html")
 
 
 app = QtWidgets.QApplication([])
