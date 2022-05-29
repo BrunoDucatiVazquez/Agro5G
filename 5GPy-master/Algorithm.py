@@ -10,25 +10,25 @@ class Algorithm():
 class FuzzyLogic(Algorithm,object):
     def run():
         #Criando as variaveis do problema
-        Soil_Moisture  = ctrl.Antecedent(np.arange(0,60,1),'Soil_Moisture')
-        Soil_Temperature  = ctrl.Antecedent(np.arange(0,40,1),'Soil_Temperature')
-        Ph = ctrl.Antecedent(np.arange(0,12,1),'Ph')
+        Soil_Moisture  = ctrl.Antecedent(np.arange(1,61,1),'Soil_Moisture')
+        Soil_Temperature  = ctrl.Antecedent(np.arange(1,41,1),'Soil_Temperature')
+        Ph = ctrl.Antecedent(np.arange(1,13,1),'Ph')
         #Como a duração da agua é a saida devemos colocar o metodo Consequent
         DuracaoAgua = ctrl.Consequent(np.arange(0,180,1),'DuracaoAgua')
         #Criando as funções de pertinencia para a umidade do solo
-        Soil_Moisture['Molhada'] = fuzz.trapmf(Soil_Moisture.universe, [0,0,10,20])
+        Soil_Moisture['Molhada'] = fuzz.trapmf(Soil_Moisture.universe, [1,1,10,20])
         Soil_Moisture['Normal'] = fuzz.trapmf(Soil_Moisture.universe, [10,20,30,40])
         Soil_Moisture['Seca'] = fuzz.trapmf(Soil_Moisture.universe, [30,40,50,60])
         #Criando as funções de pertinencia para a temperatura do solo
-        Soil_Temperature['Gelada'] = fuzz.trapmf(Soil_Temperature.universe, [0,1,15,20])
+        Soil_Temperature['Gelada'] = fuzz.trapmf(Soil_Temperature.universe, [1,1,15,20])
         Soil_Temperature['Amena'] = fuzz.trapmf(Soil_Temperature.universe, [15,20,25,30])
-        Soil_Temperature['Quente'] = fuzz.trapmf(Soil_Temperature.universe, [25,30,35,40])
+        Soil_Temperature['Quente'] = fuzz.trapmf(Soil_Temperature.universe, [25,30,35,49])
         #Criando as funções de pertinencia para a o Ph
-        Ph['baixo'] = fuzz.trapmf(Ph.universe, [0,0,2,4])
+        Ph['baixo'] = fuzz.trapmf(Ph.universe, [1,1,2,4])
         Ph['neutro'] = fuzz.trapmf(Ph.universe, [2,4,6,8])
         Ph['alcalino'] = fuzz.trapmf(Ph.universe, [6,8,10,14])
         #Criando as funções de pertinencia de saida que é o tempo de duração da agua
-        DuracaoAgua['Curto'] = fuzz.trapmf(DuracaoAgua.universe, [0,0,40,60])
+        DuracaoAgua['Curto'] = fuzz.trapmf(DuracaoAgua.universe, [1,1,40,60])
         DuracaoAgua['Medio'] = fuzz.trapmf(DuracaoAgua.universe, [30,60,100,120])
         DuracaoAgua['Longo'] = fuzz.trapmf(DuracaoAgua.universe, [90,120,160,180])
         #Criando as regras para o tempo de duração da agua
@@ -68,8 +68,8 @@ class FuzzyLogic(Algorithm,object):
 
           temp = simulationFinal.soil_sensor_Temperature.setTemperature
           # temp = simulationFinal.soil_sensor_Temperature.setTemperature
-          if temp < 0 or temp > 40:
-            print("A temperatura adeve estar no intervalo [0,40]")
+          if temp < 0 or temp > 49:
+            print("A temperatura adeve estar no intervalo [0,49]")
             continue
           DuracaoAgua_simulador.input['Soil_Temperature'] = temp
           break
