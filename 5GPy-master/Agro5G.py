@@ -22,9 +22,9 @@ def executeAlgorithmAndVisualizateData(self):
 def showGraphic():
     excel_file = 'teste.xlsx'
     df = pd.read_excel(excel_file)
-    fig = px.scatter(df, x="Temperatura", y="Duração Da Agua")
-    fig2 = px.scatter(df, x="Humidade", y="Duração Da Agua")
-    fig3 = px.scatter(df, x="Ph", y="Duração Da Agua")
+    fig = px.bar(df, x="Temperatura", y="Duração Da Agua", barmode="group")
+    fig2 = px.bar(df, x="Humidade", y="Duração Da Agua", barmode="group")
+    fig3 = px.bar(df, x="Ph", y="Duração Da Agua", barmode="group")
     plotly.offline.plot(fig, filename="temperature.html")
     plotly.offline.plot(fig2, filename="Humidade.html")
     plotly.offline.plot(fig3, filename="Ph.html")
