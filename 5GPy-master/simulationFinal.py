@@ -242,26 +242,26 @@ env = simpy.Environment()#sets the simpy environment
 generationInterval = 100#time interval for a sensor to generate a single data packet
 sendInterval = 500#time interval for a sensor to send its aggregated data to its iot gateway
 
-iotGateway1 = BaseIoTGateway(env, "iotGateway 1")
-# antenna5gGateway = antenna5gGateway(env, "5G")
+# iotGateway1 = BaseIoTGateway(env, "iotGateway 1")
+antenna5gGateway = antenna5gGateway(env, "5G")
 
 #to see the sensors in  5G gateway, just uncomment this part
-# soil_sensor_Temperature = SoilTemperatureSensor(env, 0, "Temperature",antenna5gGateway,generationInterval,sendInterval,)#create temperature sensor
-# sensor_Humidity = HumididtySensor(env, 0, "Humidity", antenna5gGateway, generationInterval, sendInterval)
-# sensor_Water_Level = WaterLevelSensor(env, 0, "WaterLevel", antenna5gGateway, generationInterval, sendInterval)
+soil_sensor_Temperature = SoilTemperatureSensor(env, 0, "Temperature",antenna5gGateway,generationInterval,sendInterval,)#create temperature sensor
+sensor_Humidity = HumididtySensor(env, 0, "Humidity", antenna5gGateway, generationInterval, sendInterval)
+sensor_Ph = PhSensor(env, 0, "Ph", antenna5gGateway, generationInterval, sendInterval)
 
 #to see tradicional Iot just uncomment this part
-soil_sensor_Temperature = SoilTemperatureSensor(env, 0, "Temperature",iotGateway1,generationInterval,sendInterval,)#create temperature sensor
-sensor_Humidity = HumididtySensor(env, 0, "Humidity", iotGateway1, generationInterval, sendInterval)
-sensor_Ph = PhSensor(env, 0, "Ph", iotGateway1, generationInterval, sendInterval)
+# soil_sensor_Temperature = SoilTemperatureSensor(env, 0, "Temperature",iotGateway1,generationInterval,sendInterval,)#create temperature sensor
+# sensor_Humidity = HumididtySensor(env, 0, "Humidity", iotGateway1, generationInterval, sendInterval)
+# sensor_Ph = PhSensor(env, 0, "Ph", iotGateway1, generationInterval, sendInterval)
 
 #to see the ProcesingNode in  5G gateway, just uncomment this part
-SinkNode = SinkNode(env, 0, "Cloud",iotGateway1,IrrigationIoT)
-# SinkNode = SinkNode(env, 0, "Cloud",antenna5gGateway,FuzzyLogic)
+# SinkNode = SinkNode(env, 0, "Cloud",iotGateway1,IrrigationIoT)
+SinkNode = SinkNode(env, 0, "Cloud",antenna5gGateway,FuzzyLogic)
 
 
 print("---------------------------------------------Starting simulation---------------------------------------------")
 env.run(3600)#sets the simulation to run for 3600 units of time (we can consider it as seconds) and starts the simulation
 print("----------------------------------------------Ending simulation----------------------------------------------")
-print("Total generated data: {} Mb".format(((iotGateway1.totalSinglePackets*120)/1000)/8))
-# print("Total generated data: {} Mb".format(((antenna5gGateway.totalSinglePackets*120)/1000)/8))
+# print("Total generated data: {} Mb".format(((iotGateway1.totalSinglePackets*120)/1000)/8))
+print("Total generated data: {} Mb".format(((antenna5gGateway.totalSinglePackets*120)/1000)/8))
