@@ -1,5 +1,4 @@
 # Agro5G
-GitHub Criado para realizar a máteria CC8421 - TRABALHO FINAL DE CURSO II 
  
 Agro5G é uma plataforma para o agronegócio baseada em redes 5G 
  
