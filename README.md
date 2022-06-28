@@ -1,6 +1,6 @@
 # Agro5G
  
-Agro5G é uma plataforma para o agronegócio baseada em redes 5G 
+Agro5G é uma plataforma unificada de gerenciamento das operações de agronegócio por meio da conectividade 5G. Em específico, neste projeto, como um primeiro caso de uso, foi focado na melhora do sistema de irrigação de modo que a produção de uma fazenda seja aumentada e a água seja utilizada de forma eficiente.
  
 # Para instalar todos os requisitos do Projeto
 basta executar o comando: pip install -r .\requirements.txt dentro da pasta 5GPy-master. Pode demorar alguns minutos
